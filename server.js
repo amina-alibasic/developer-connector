@@ -1,5 +1,10 @@
 const express = require('express');
+const connectDB = require('./config/db');
+
 const app = express();
+
+// Connect to the DB
+connectDB();
 
 // end point to test the connection
 // takes a GET req to '/', the res just sends data to the browser
