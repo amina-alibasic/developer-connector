@@ -1,5 +1,5 @@
-import { Router } from 'express';
-const router = Router();
+const express = require('express');
+const router = express.Router();
 
 // @route   GET api/users
 // @desc    Test route
@@ -16,4 +16,4 @@ router.post('/', (req,res) => {
     res.send('User route')
 });
 
-export default router;
+module.exports = router;

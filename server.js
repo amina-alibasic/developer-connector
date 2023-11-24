@@ -1,5 +1,5 @@
-import express from 'express';
-import connectDB from './config/db.js';
+const express = require('express');
+const connectDB = require('./config/db');
 
 // This here offers a range of functionalities
 const app = express();
@@ -15,11 +15,10 @@ app.use(express.json({ extended: false })) // allows getting the date in request
 app.get('/', (req,res) => res.send('API Running'));
 
 // Define routes
-// use is a middleware function used as an entry point for all HTTP requests
-app.use('/api/users', require('./config/routes/api/users').default);
-app.use('/api/auth', require('./config/routes/api/auth').default);
-app.use('/api/profile', require('./config/routes/api/profile').default);
-app.use('/api/posts', require('./config/routes/api/posts').default);
+app.use('/api/users', require('./config/routes/api/users'));
+app.use('/api/auth', require('./config/routes/api/auth'));
+app.use('/api/profile', require('./config/routes/api/profile'));
+app.use('/api/posts', require('./config/routes/api/posts'));
 
 
 // this looks for an env variable PORT when the app is deployed, but locally will listen on port 5000
