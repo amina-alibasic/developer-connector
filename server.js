@@ -1,11 +1,14 @@
 import express from 'express';
-import connectDB from './config/db';
+import connectDB from './config/db.js';
 
 // This here offers a range of functionalities
 const app = express();
 
 // Connect to the DB
 connectDB();
+
+// Init Middleware
+app.use(express.json({ extended: false })) // allows getting the date in request.body in routes
 
 // end point to test the connection
 // takes a GET req to '/', the res just sends data to the browser
