@@ -1,10 +1,10 @@
-import * as mongoose from "mongoose";
+const mongoose = require("mongoose");
 // Create a schema containing different fields we want this resource to have
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true, // this doesn't allow empty strings either
   },
   email: {
     type: String,
