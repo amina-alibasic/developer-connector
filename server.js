@@ -15,10 +15,10 @@ app.use(express.json({ extended: false })); // allows getting the date in reques
 app.get("/", (req, res) => res.send("API Running"));
 
 // Define routes
-app.use("/api/users", require("./config/routes/api/users"));
-app.use("/api/auth", require("./config/routes/api/auth"));
-app.use("/api/profile", require("./config/routes/api/profile"));
-app.use("/api/posts", require("./config/routes/api/posts"));
+app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/profile", require("./routes/api/profile"));
+app.use("/api/posts", require("./routes/api/posts"));
 
 // this looks for an env variable PORT when the app is deployed, but locally will listen on port 5000
 const PORT = process.env.PORT || 5000;
