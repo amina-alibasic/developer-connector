@@ -13,7 +13,7 @@ const config = require("config");
 router.get("/", (req, res) => res.send("User route"));
 
 // @route   POST api/users
-// @desc    Reguster a user
+// @desc    Register a user
 // @access  public
 router.post(
   "/",
