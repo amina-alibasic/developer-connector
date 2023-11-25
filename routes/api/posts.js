@@ -136,23 +136,23 @@ router.put("/unlike/:id", auth, async (req, res) => {
     }
 
     // Check if there is a like to remove
-    if (
-      post.likes.filter((like) => like.user.toString() === req.user.id)
-        .length === 0
-    ) {
+    if (post.likes.length === 0) {
       return res.json({ msg: "The post has no likes to remove." });
     }
 
     // The user currently logged in can only remove their like, not others
-    const findLike = post.likes.map(
+    const findLike = post.likes.filter(
       (like) => like.user.toString() === req.user.id
     );
-    if (!findLike) {
-      return res.status(400).json({ msg: "The like doesn't exist." });
+    if (findLike.length === 0) {
+      return res
+        .status(400)
+        .json({ msg: "Post cannot be unliked as it wasn't previously liked." });
     }
     // Get remove index
-    const removeIndex = post.likes // find the like of currently logegd in user
-      .indexOf(findLike._id);
+    const removeIndex = post.likes
+      .map((like) => like.user.toString()) // find the like of currently logegd in user
+      .indexOf(req.user.id);
     // Remove the element at that index (likes is an array of items)
     post.likes.splice(removeIndex, 1);
     await post.save();
