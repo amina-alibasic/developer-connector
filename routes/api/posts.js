@@ -163,4 +163,77 @@ router.put("/unlike/:id", auth, async (req, res) => {
   }
 });
 
+// @route   PUT api/posts/comment/:id
+// @desc    Add a comment to a post
+// @access  private
+router.put(
+  "/comment/:id",
+  [auth, [check("text", "Text is required.").not().isEmpty()]],
+  async (req, res) => {
+    try {
+      // first find the post
+      const post = await Post.findById(req.params.id);
+      if (!post) {
+        return res.status(400).json({ msg: "The post doesn't exist." });
+      }
+
+      // find the currently logged in user posting the comment
+      const user = await User.findById(req.user.id).select("-password");
+
+      const newComment = {
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: req.user.id,
+      };
+
+      post.comments.unshift(newComment); // add (push) a comment
+      await post.save();
+      res.json(post);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+// @route   PUT api/posts/uncomment/:id
+// @desc    Remove a comment from a post
+// @access  private
+router.put("/uncomment/:id", auth, async (req, res) => {
+  try {
+    // first find the post
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(400).json({ msg: "The post doesn't exist." });
+    }
+
+    // Check if there is a comment to remove
+    if (post.comments.length === 0) {
+      return res.json({ msg: "The post has no comments to remove." });
+    }
+
+    // The user currently logged in can only remove their comment, not others
+    const findComment = post.comments.filter(
+      (comment) => comment.user.toString() === req.user.id
+    );
+    if (findComment.length === 0) {
+      return res.status(400).json({ msg: "No comment to remove." });
+    }
+    // Get remove index
+    const removeIndex = post.comments
+      .map((comment) => comment.user.toString()) // find the comment of currently logegd in user
+      .indexOf(req.user.id);
+    // Remove the element at that index (comments is an array of items)
+    /* If user has posted multiple comments in one post (which is possible),
+    this wll remove the last added comment. */
+    post.comments.splice(removeIndex, 1);
+    await post.save();
+    res.json(post);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
