@@ -308,10 +308,10 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id });
 
     // Get remove index
-    const removeIndex = profile.experience
+    const removeIndex = profile.education
       .map((edu) => edu.id)
       .indexOf(req.params.edu_id);
-    // Remove the element at that index (experience can be an array of items)
+    // Remove the element at that index (education can be an array of items)
     profile.education.splice(removeIndex, 1);
     await profile.save(); // save the profile after removing
     res.json(profile); // return the updated
