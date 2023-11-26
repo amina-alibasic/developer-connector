@@ -1,7 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { logout } from "../../actions/auth";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-export const Navbar = () => {
+const Navbar = ({ logout, isAuthenticated }) => {
+  const loggedOutUserLinks = [
+    {
+      placeholder: "Developers",
+      link: "/profiles",
+    },
+    { placeholder: "Register", link: "/register" },
+    {
+      placeholder: "Login",
+      link: "/login",
+    },
+  ];
+
+  function customLinks() {
+    if (isAuthenticated) {
+      return (
+        <ul>
+          <li>
+            <Link to="/" onClick={logout}>
+              Logout
+            </Link>
+          </li>
+        </ul>
+      );
+    } else {
+      const listItems = loggedOutUserLinks.map((element) => (
+        <li key={element.link}>
+          <Link to={element.link}>{element.placeholder}</Link>
+        </li>
+      ));
+      return <ul>{listItems}</ul>;
+    }
+  }
+
   return (
     <nav className="navbar bg-dark">
       <h1>
@@ -9,17 +45,17 @@ export const Navbar = () => {
           <i className="fas fa-code"></i> DevConnector
         </Link>
       </h1>
-      <ul>
-        <li>
-          <Link to="/profiles/">Developers</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-      </ul>
+      <div> {customLinks()}</div>
     </nav>
   );
 };
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+export default connect(mapStateToProps, { logout })(Navbar);

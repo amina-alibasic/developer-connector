@@ -14,6 +14,11 @@ const config = require("config");
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password"); // leave off the password in data retuned
+    if (!user) {
+      return res.status(400).json({
+        errors: [{ msg: `User with those credentials does not exist` }],
+      });
+    }
     res.json(user);
   } catch (error) {
     console.error(error.message);

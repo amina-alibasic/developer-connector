@@ -1,7 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
+import { register } from "../../actions/auth";
+import PropTypes from "prop-types";
 
-export const Register = () => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   // The useState hook enables functional components to hold and update their internal state.
   // This is the initial state:
   const [formData, setState] = useState({
@@ -12,7 +16,7 @@ export const Register = () => {
   });
   const { name, email, password, password2 } = formData;
 
-  // setState: updates the state in a React component. It is initialized usinf the useState hook.
+  // setState: updates the state in a React component. It is initialized using the useState hook.
   // When setState is called, React will re-render the component with the updated state.
   // First it creates a new object formData by copying the previous values, then it updates the field, depending on the name of the field.
   const onChange = (e) =>
@@ -20,9 +24,11 @@ export const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("passwords don't match");
+      // here we trigger an action from the component:
+      setAlert("Passwords don't match.", "danger"); // because of alert-danger in App.css
     } else {
-      console.log("SUCESS");
+      register(name, email, password);
+
       // newUser is the body of the POST request
       /* const newUser = {
         name,
@@ -44,6 +50,9 @@ export const Register = () => {
       } */
     }
   };
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <Fragment>
@@ -107,3 +116,18 @@ export const Register = () => {
     </Fragment>
   );
 };
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+export default connect(mapStateToProps, {
+  setAlert,
+  register,
+})(Register);

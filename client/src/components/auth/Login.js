@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
-export const Login = () => {
+import { Link, Navigate } from "react-router-dom";
+import { login } from "../../actions/auth";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+const Login = ({ login, isAuthenticated }) => {
   // The useState hook enables functional components to hold and update their internal state.
   // This is the initial state:
   const [formData, setState] = useState({
@@ -16,8 +20,12 @@ export const Login = () => {
     setState({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("SUCESS");
+    login(email, password);
   };
+  // Navigate if user logged in
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace={true} />;
+  }
 
   return (
     <Fragment>
@@ -60,3 +68,13 @@ export const Login = () => {
     </Fragment>
   );
 };
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+export default connect(mapStateToProps, { login })(Login);
