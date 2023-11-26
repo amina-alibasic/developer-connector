@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout } from "../../actions/auth";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
