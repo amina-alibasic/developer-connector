@@ -1,8 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Navigate, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
-import Login from "../auth/Login";
 
 /* If the user is authenticated (logged in), display the component passed to this private route.
 Else, display the login page. 

@@ -16,18 +16,34 @@ const Navbar = ({ logout, isAuthenticated }) => {
       link: "/login",
     },
   ];
+  const loggedInUserLinks = [
+    {
+      placeholder: "Logout",
+      link: "/",
+    },
+    { placeholder: "Dashboard", link: "/dashboard" },
+  ];
 
   function customLinks() {
     if (isAuthenticated) {
-      return (
-        <ul>
-          <li>
-            <Link to="/" onClick={logout}>
-              Logout
-            </Link>
+      const listItems = loggedInUserLinks.map((element) => {
+        if (element.link === "/") {
+          // logout route
+          return (
+            <li key={element.link}>
+              <Link to={element.link} onClick={logout}>
+                {element.placeholder}
+              </Link>
+            </li>
+          );
+        }
+        return (
+          <li key={element.link}>
+            <Link to={element.link}>{element.placeholder}</Link>
           </li>
-        </ul>
-      );
+        );
+      });
+      return <ul>{listItems}</ul>;
     } else {
       const listItems = loggedOutUserLinks.map((element) => (
         <li key={element.link}>

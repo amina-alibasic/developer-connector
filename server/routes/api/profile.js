@@ -42,8 +42,8 @@ router.post(
     auth, // using auth middleware, this requires token to be sent in the Headers
     [
       // set up validation rules
-      check("status", "Status is required").not().isEmpty(),
-      check("skills", "Skills is required").not().isEmpty(),
+      check("status", "Status is required.").not().isEmpty(),
+      check("skills", "Skills is required.").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -188,9 +188,9 @@ router.put(
   auth,
   [
     // set up validation rules
-    check("title", "Title is required").not().isEmpty(),
-    check("company", "Company is required").not().isEmpty(),
-    check("from", "Date from is required").not().isEmpty(),
+    check("title", "Title is required.").not().isEmpty(),
+    check("company", "Company is required.").not().isEmpty(),
+    check("from", "Date from is required.").not().isEmpty(),
   ],
   async (req, res) => {
     try {
@@ -208,10 +208,12 @@ router.put(
           .json({ msg: "There is no profile for this user." });
       }
       // if profile is found, do the rest
-      const { title, location, from, to, current, description } = req.body;
+      const { title, location, company, from, to, current, description } =
+        req.body;
       const newExp = {
         title,
         location,
+        company,
         from,
         to,
         current,
@@ -257,10 +259,10 @@ router.put(
   auth,
   [
     // set up validation rules
-    check("school", "School is required").not().isEmpty(),
-    check("degree", "Degree is required").not().isEmpty(),
-    check("fieldofstudy", "Field of study from is required").not().isEmpty(),
-    check("from", "Date from is required").not().isEmpty(),
+    check("school", "School is required.").not().isEmpty(),
+    check("degree", "Degree is required.").not().isEmpty(),
+    check("fieldofstudy", "Field of study from is required.").not().isEmpty(),
+    check("from", "Date from is required.").not().isEmpty(),
   ],
   async (req, res) => {
     try {

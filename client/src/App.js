@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { Fragment, useEffect } from "react";
 import Navbar from "./components/layout/Navbar";
-import { Landing } from "./components/layout/Landing";
+import Landing from "./components/layout/Landing";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -10,10 +10,14 @@ import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import CreateProfile from "./components/profile/CreateProfile";
+import EditProfile from "./components/profile/EditProfile";
 
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";
+import AddExperience from "./components/profile/AddExperience";
+import AddEducation from "./components/profile/AddEducation";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -38,6 +42,38 @@ const App = () => {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/create-profile"
+              element={
+                <PrivateRoute>
+                  <CreateProfile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/edit-profile"
+              element={
+                <PrivateRoute>
+                  <EditProfile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/add-experience"
+              element={
+                <PrivateRoute>
+                  <AddExperience />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/add-education"
+              element={
+                <PrivateRoute>
+                  <AddEducation />
                 </PrivateRoute>
               }
             />
