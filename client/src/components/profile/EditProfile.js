@@ -57,7 +57,7 @@ const EditProfile = ({
       instagram: loading || !profile.instagram ? "" : profile.instagram,
       youtube: loading || !profile.youtube ? "" : profile.youtube,
     });
-  }, [loading]); // when loading is done, run this
+  }, [loading, getCurrentProfile]); // when loading is done, run this
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });

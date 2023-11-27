@@ -197,10 +197,10 @@ router.put(
   }
 );
 
-// @route   PUT api/posts/uncomment/:id
+// @route   PUT api/posts/uncomment/:id/:commentId
 // @desc    Remove a comment from a post
 // @access  private
-router.put("/uncomment/:id", auth, async (req, res) => {
+router.put("/uncomment/:id/:commentId", auth, async (req, res) => {
   try {
     // first find the post
     const post = await Post.findById(req.params.id);
@@ -222,8 +222,8 @@ router.put("/uncomment/:id", auth, async (req, res) => {
     }
     // Get remove index
     const removeIndex = post.comments
-      .map((comment) => comment.user.toString()) // find the comment of currently logegd in user
-      .indexOf(req.user.id);
+      .map((comment) => comment._id) // find the comment of currently logegd in user
+      .indexOf(req.params.commentId);
     // Remove the element at that index (comments is an array of items)
     /* If user has posted multiple comments in one post (which is possible),
     this wll remove the last added comment. */

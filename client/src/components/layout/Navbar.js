@@ -18,10 +18,18 @@ const Navbar = ({ logout, isAuthenticated }) => {
   ];
   const loggedInUserLinks = [
     {
+      placeholder: "Developers",
+      link: "/profiles",
+    },
+    {
+      placeholder: "Posts",
+      link: "/posts",
+    },
+    { placeholder: "Dashboard", link: "/dashboard" },
+    {
       placeholder: "Logout",
       link: "/",
     },
-    { placeholder: "Dashboard", link: "/dashboard" },
   ];
 
   function customLinks() {
