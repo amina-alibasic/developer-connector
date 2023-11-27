@@ -35,7 +35,7 @@ npm ci
 ```
 
 ### Start the server
-After setting the mongoURI in the `defaults.json` file in path `server\config\default.json`, run
+After setting the mongoURI in the file with path `server\config\default.json`, run
 ```
 npm run server
 ```
