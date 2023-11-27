@@ -1,17 +1,15 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { Navigate, Routes, Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import Login from "../auth/Login";
 
 /* If the user is authenticated (logged in), display the component passed to this private route.
 Else, display the login page. 
 This template is generic; it will work with any component in the app.
 */
-const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => {
-  if (isAuthenticated) {
-    return <Component {...rest} />;
-  }
-  return <Navigate tp="login" />;
+const PrivateRoute = ({ children, isAuthenticated }) => {
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 PrivateRoute.propTypes = {
