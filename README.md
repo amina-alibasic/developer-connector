@@ -13,10 +13,8 @@ Open your shell/terminal of choice and `cd` into the client folder of this repo.
 ### Install dependencies
 
 ```
-npm ci
+npm i
 ```
-**NOTE:** `ci` (as opposed to `install`) is a 'clean install' which ensures versions exactly match package-lock.json).
-
 
 
 ### Start the client
@@ -31,7 +29,7 @@ Open your shell/terminal of choice and `cd` into the server folder of this repo.
 ### Install dependencies
 
 ```
-npm ci
+npm i
 ```
 
 ### Start the server
